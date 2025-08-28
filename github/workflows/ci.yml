@@ -1,0 +1,32 @@
+name: C CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install GCC
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    - name: Compile Server
+      run: gcc altitude_server.c -o server -lpthread
+
+    - name: Compile Client
+      run: gcc altitude_client.c -o client -lpthread
+
+    - name: Run Server (in background)
+      run: ./server & sleep 1
+
+    - name: Run Client
+      run: ./client
+
+    - name: Stop Server
+      run: pkill server || true
