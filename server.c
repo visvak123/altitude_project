@@ -1,4 +1,4 @@
-// altitude_server.c
+// server.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
